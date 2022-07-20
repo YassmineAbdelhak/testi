@@ -1,17 +1,42 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { render } from 'react-dom';
+// Import Highcharts
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// Load Highcharts modules
+import HighchartsData from 'highcharts/modules/data';
+import HighchartsExporting from 'highcharts/modules/exporting';
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+HighchartsData(Highcharts);
+HighchartsExporting(Highcharts);
+
+const chartOptions = {
+  chart: {
+    type: 'spline',
+  },
+  title: {
+    text: 'Live Data (CSV)',
+  },
+
+  subtitle: {
+    text: 'Data input from a remote CSV file',
+  },
+
+  data: {
+    csvURL:
+      'https://raw.githubusercontent.com/YassmineAbdelhak/testi/main/saless.csv',
+  },
+};
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <HighchartsReact options={chartOptions} highcharts={Highcharts} />
+      </div>
+    );
+  }
+}
+
+render(<App />, document.getElementById('root'));
